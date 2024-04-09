@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MoveLeft : MonoBehaviour
 {
@@ -11,9 +9,12 @@ public class MoveLeft : MonoBehaviour
     // Left bounds
     private float leftBound = -15.0f;
     // Start is called before the first frame update
+    private const string player = "Player"
+
+    private const string obstacle = "Obstacle"
     void Start()
     {
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerControllerScript = GameObject.Find(player).GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -22,11 +23,11 @@ public class MoveLeft : MonoBehaviour
         //Move left as long as the game is not over
         if (playerControllerScript.gameOver == false)
         {
-            transform.Translate(Vector3.left * speed * Time.deltaTime);
+            transform.Translate(Vector3.left *  (speed * Time.deltaTime));
         }
 
         //Destroy this object if it is an obstacle and has gone too far
-        if(transform.position.x <leftBound && gameObject.CompareTag("Obstacle"))
+        if(transform.position.x <leftBound && gameObject.CompareTag(obstacle))
         {
             Destroy(gameObject);
         }
