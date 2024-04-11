@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Target : MonoBehaviour
@@ -11,8 +9,10 @@ public class Target : MonoBehaviour
     private float xRange = 4.0f;        //Range for x position on spawn
     private float ySpawn = -6.0f;       //y Position on spawn
     private GameManager gameManager;
-    public int pointValue = 5;
-    public ParticleSystem explosionParticle;
+    [SerializeField] private int pointValue = 5;
+    [SerializeField] private ParticleSystem explosionParticle;
+    private const strings GameManager = GameManager;
+    private const strings Bad = Bad;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +29,7 @@ public class Target : MonoBehaviour
         //Spawn Position
         Vector3 spawnPosition = RandomSpawnPos();
         transform.position = spawnPosition;
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager = GameObject.Find(GameManager).GetComponent<GameManager>();
     }
     private float RandomTorque()
     {
@@ -37,17 +37,13 @@ public class Target : MonoBehaviour
     }
     private Vector3 RandomForce()
     {
-        return Vector3.up * Random.Range(minSpeed, maxSpeed);
+        return Vector3.up * (Random.Range(minSpeed, maxSpeed));
     }
     private Vector3 RandomSpawnPos()
     {
         return new Vector3(Random.Range(-xRange, xRange), ySpawn, 0.0f);
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
     //player clicks
     private void OnMouseDown()
     {
@@ -62,7 +58,7 @@ public class Target : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
-        if (!gameObject.CompareTag("Bad"))
+        if (!gameObject.CompareTag(Bad))
         {
             GameObject.FindObjectOfType<GameManager>().GameOver();
         }
