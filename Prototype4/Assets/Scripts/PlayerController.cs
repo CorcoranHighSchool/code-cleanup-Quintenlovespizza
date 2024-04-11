@@ -1,34 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerRb;
-    public float speed = 5.0f;
-    public GameObject focalPoint;
+    [SerializeField] private float speed = 5.0f;
+    [SerializeField] private GameObject focalPoint;
     public bool hasPowerup;
     private float powerUpStrength = 15.0f;
-    public GameObject powerupIndicator;
+    [SerializeField] private GameObject powerupIndicator;
+    private const string focalPoint = focalPoint
+    private const string vertical = vertical;
+    private const string Powerup = powerup;
+    private const string enemy = enemy;
 
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
-        focalPoint = GameObject.Find("Focal Point");
+        focalPoint = GameObject.Find(focalPoint);
     }
 
     // Update is called once per frame
     void Update()
     {
-        powerupIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
-        float verticalInput = Input.GetAxis("Vertical");
+        (powerupIndicator.transform.position = transform.position) + new Vector3(0, -0.5f, 0);
+        float verticalInput = Input.GetAxis(vertical);
         playerRb.AddForce(focalPoint.transform.forward * speed * verticalInput);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Powerup"))
+        if (other.CompareTag(powerup))
         {
             powerupIndicator.SetActive(true);   //
             hasPowerup = true;
@@ -46,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && hasPowerup)
+        if (collision.gameObject.CompareTag(enemy) && hasPowerup)
         {
             Rigidbody enemyRigidbody = collision.gameObject.GetComponent<Rigidbody>();
             Vector3 awayfromPlayer = (collision.gameObject.transform.position - transform.position);
